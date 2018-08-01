@@ -9,9 +9,9 @@ def display_board(x):
     for i in range(1, 8, 3):
         if i != 1:
             print('-----+-----+-----')
-        print('     |     |     ')
+        print( '     |     |     ')
         print('  {}  |  {}  |  {}  '.format(x[i], x[i + 1], x[i + 2]))
-        print('     |     |     ')
+        print( '     |     |     ')
     print(' ')
 
 
@@ -42,7 +42,7 @@ def place_marker():
     global list_to_board
     global player_active
 
-    while win_check(list_to_board) is False:
+    while win_check(list_to_board) is False and full_board_check() is False:
 
         if player_active == 1:
             marker = player_one_marker
@@ -51,14 +51,16 @@ def place_marker():
 
         player_choice = int(input('\nPlayer {}, place your {}\n'.format(player_active, marker)))
 
-        list_to_board[converted_player_choice(player_choice)] = marker
-        display_board(list_to_board)
+        if player_choice in range(1,10):
+            list_to_board[converted_player_choice(player_choice)] = marker
+            display_board(list_to_board)
+            if player_active == 1:
+                player_active = 2
+            elif player_active == 2:
+                player_active = 1
+        else:
+            print('That is not a valid choice')
 
-        if player_active == 1:
-            player_active = 2
-
-        elif player_active == 2:
-            player_active = 1
 
 
 def win_check(ltc):
@@ -104,7 +106,7 @@ def space_full_check(stc):
 
 def full_board_check():
     if ' ' not in list_to_board[1:]:
-        print('This board is full guys')
+        print('This board is full guys, you drew... a full board')
         return True
     else:
         return False
@@ -132,7 +134,7 @@ game_running = True
 
 # print(win_check(test_board))
 while game_running == True:
-    blank_board = [' '] * 10
+    blank_board = ['#','T', 'I', 'C', 'T', 'A', 'C', 'T', 'O', 'E']
     list_to_board = [' '] * 10
 
     print('Welcome to extreme TIC TAC TOE ')
