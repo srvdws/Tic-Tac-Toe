@@ -77,6 +77,12 @@ def win_check(ltc):
     elif 'XXX' in ''.join(ltc[2::3]):
         print('player{}, you got that right'.format(player_active))
         return True
+    elif 'XXX' in ''.join(ltc[1::4]):
+        print('player{}, you got that right'.format(player_active))
+        return True
+    elif 'XXX' in ''.join(ltc[3:8:2]):
+        print('player{}, you got that right'.format(player_active))
+        return True
     else:
         return False
 
