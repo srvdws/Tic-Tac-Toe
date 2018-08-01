@@ -62,25 +62,26 @@ def place_marker():
 
 
 def win_check(ltc):
-    if 'XXX' in ''.join(ltc[1:4]):
+
+    if 'XXX' == ''.join(ltc[1:4]) or 'OOO' == ''.join(ltc[1:4]):
         print('Winner winner chicken dinner for player {}!'.format(player_active))
         return True
-    elif 'XXX' in ''.join(ltc[4:7]):
+    elif 'XXX' == ''.join(ltc[4:7]) or 'OOO' == ''.join(ltc[1:4]):
         print('A winrar is you, player{}'.format(player_active))
         return True
-    elif 'XXX' in ''.join(ltc[7:]):
+    elif 'XXX' == ''.join(ltc[7:]) or 'OOO' == ''.join(ltc[1:4]):
         print('player{}, you won'.format(player_active))
         return True
-    elif 'XXX' in ''.join(ltc[1::3]):
+    elif 'XXX' == ''.join(ltc[1::3]) or 'OOO' == ''.join(ltc[1:4]):
         print('player{}, you beast'.format(player_active))
         return True
-    elif 'XXX' in ''.join(ltc[2::3]):
+    elif 'XXX' == ''.join(ltc[2::3]) or 'OOO' == ''.join(ltc[1:4]):
         print('player{}, you got that right'.format(player_active))
         return True
-    elif 'XXX' in ''.join(ltc[1::4]):
+    elif 'XXX' == ''.join(ltc[1::4]) or 'OOO' == ''.join(ltc[1:4]):
         print('player{}, you got that right'.format(player_active))
         return True
-    elif 'XXX' in ''.join(ltc[3:8:2]):
+    elif 'XXX' == ''.join(ltc[3:8:2]) or 'OOO' == ''.join(ltc[1:4]):
         print('player{}, you got that right'.format(player_active))
         return True
     else:
