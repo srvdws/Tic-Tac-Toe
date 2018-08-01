@@ -8,10 +8,10 @@ def display_board(x):
     print(' ')
     for i in range(1, 8, 3):
         if i != 1:
-            print('-----+-----+-----')
-        print( '     |     |     ')
-        print('  {}  |  {}  |  {}  '.format(x[i], x[i + 1], x[i + 2]))
-        print( '     |     |     ')
+            print('                                        -----+-----+-----')
+        print('                                             |     |     ')
+        print('                                          {}  |  {}  |  {}  '.format(x[i], x[i + 1], x[i + 2]))
+        print('                                             |     |     ')
     print(' ')
 
 
@@ -41,50 +41,68 @@ def converted_player_choice(x):
 def place_marker():
     global list_to_board
     global player_active
+    global player_not_active
 
-    while win_check(list_to_board) is False and full_board_check() is False:
+    while win_check(list_to_board) == False:
+        if full_board_check() == False:
 
-        if player_active == 1:
-            marker = player_one_marker
-        elif player_active == 2:
-            marker = player_two_marker
-
-        player_choice = int(input('\nPlayer {}, place your {}\n'.format(player_active, marker)))
-
-        if player_choice in range(1,10):
-            list_to_board[converted_player_choice(player_choice)] = marker
-            display_board(list_to_board)
             if player_active == 1:
-                player_active = 2
+                marker = player_one_marker
             elif player_active == 2:
-                player_active = 1
-        else:
-            print('That is not a valid choice')
+                marker = player_two_marker
 
+            player_choice = int(input('\nPlayer {}, place your {}\n'.format(player_active, marker)))
+            if is_space_empty(player_choice):
+
+                if player_choice in range(1,10):
+
+                    list_to_board[converted_player_choice(player_choice)] = marker
+                    clear_screen()
+                    display_board(list_to_board)
+                else:
+                    print('That is not a valid choice')
+
+                if player_active == 1:
+                    player_active = 2
+                    player_not_active =1
+                elif player_active == 2:
+                    player_active = 1
+                    player_not_active = 2
+                else:
+                    break
+            else:
+                clear_screen()
+                display_board(list_to_board)
+                print('that space is already taken')
+        else:
+            break
 
 
 def win_check(ltc):
 
     if 'XXX' == ''.join(ltc[1:4]) or 'OOO' == ''.join(ltc[1:4]):
-        print('Winner winner chicken dinner for player {}!'.format(player_active))
+        print('Winner winner chicken dinner for player {}!'.format(player_not_active))
         return True
-    elif 'XXX' == ''.join(ltc[4:7]) or 'OOO' == ''.join(ltc[1:4]):
-        print('A winrar is you, player{}'.format(player_active))
+    elif 'XXX' == ''.join(ltc[4:7]) or 'OOO' == ''.join(ltc[4:7]):
+        print('A winrar is you, player {}'.format(player_not_active))
         return True
-    elif 'XXX' == ''.join(ltc[7:]) or 'OOO' == ''.join(ltc[1:4]):
-        print('player{}, you won'.format(player_active))
+    elif 'XXX' == ''.join(ltc[7:]) or 'OOO' == ''.join(ltc[7:]):
+        print('player {}, you won'.format(player_not_active))
         return True
-    elif 'XXX' == ''.join(ltc[1::3]) or 'OOO' == ''.join(ltc[1:4]):
-        print('player{}, you beast'.format(player_active))
+    elif 'XXX' == ''.join(ltc[1::3]) or 'OOO' == ''.join(ltc[1::3]):
+        print('player {}, you beast'.format(player_not_active))
         return True
-    elif 'XXX' == ''.join(ltc[2::3]) or 'OOO' == ''.join(ltc[1:4]):
-        print('player{}, you got that right'.format(player_active))
+    elif 'XXX' == ''.join(ltc[2::3]) or 'OOO' == ''.join(ltc[2::3]):
+        print('player {}, you got that right'.format(player_not_active))
         return True
-    elif 'XXX' == ''.join(ltc[1::4]) or 'OOO' == ''.join(ltc[1:4]):
-        print('player{}, you got that right'.format(player_active))
+    elif 'XXX' == ''.join(ltc[3::3]) or 'OOO' == ''.join(ltc[3::3]):
+        print('player {}, is the winner!'.format(player_not_active))
         return True
-    elif 'XXX' == ''.join(ltc[3:8:2]) or 'OOO' == ''.join(ltc[1:4]):
-        print('player{}, you got that right'.format(player_active))
+    elif 'XXX' == ''.join(ltc[1::4]) or 'OOO' == ''.join(ltc[1::4]):
+        print('player {}, you got three in a row!'.format(player_not_active))
+        return True
+    elif 'XXX' == ''.join(ltc[3:8:2]) or 'OOO' == ''.join(ltc[3:8:2]):
+        print('player {}, on the angle!'.format(player_not_active))
         return True
     else:
         return False
@@ -100,8 +118,8 @@ def choose_first():
         return 2
 
 
-def space_full_check(stc):
-    return list_to_board[stc] == ' '
+def is_space_empty(stc):
+    return list_to_board[converted_player_choice(stc)] == ' '
 
 
 def full_board_check():
@@ -112,41 +130,40 @@ def full_board_check():
         return False
 
 
-def player_choice_func(x):
-    if space_full_check(x) == True:
-        print("That space is already taken, please don't cheat")
-    else:
-        return x
-
-
 def replay():
-    x = str(input('Type "Y" to play again?'))
+    x = str(input('\nType "Y" to play again?'))
     if x.upper() == 'Y':
         return True
     else:
         print('Thanks for playing')
         return False
 
-
-# test_board = ['#','X','O','X','O','X','O','X','O','X']
+def clear_screen():
+    print('\n '*100)
 
 game_running = True
 
 # print(win_check(test_board))
 while game_running == True:
-    blank_board = ['#','T', 'I', 'C', 'T', 'A', 'C', 'T', 'O', 'E']
+    blank_board = ['#', 'T', 'I', 'C', 'T', 'A', 'C', 'T', 'O', 'E']
     list_to_board = [' '] * 10
+    numbered_board = ['#',7,8,9,4,5,6,1,2,3]
 
-    print('Welcome to extreme TIC TAC TOE ')
+    clear_screen()
+
+    print('\nWelcome to extreme TIC TAC TOE')
 
     display_board(blank_board)
 
     player_one_marker = player_one_input()
     player_two_marker = player_two_calc(player_one_marker)
 
+    clear_screen()
     print("\nYou're choice is {}\nPlayer two is {}".format(player_one_marker, player_two_marker))
 
     player_active = choose_first()
+
+    display_board(numbered_board)
 
     place_marker()
 
