@@ -62,7 +62,8 @@ def place_marker():
 
 
 def win_check(ltc):
-    if 'XXX' in ''.join(ltc[1:4]):
+
+    if 'XXX' 'OOO' in ''.join(ltc[1:4]):
         print('Winner winner chicken dinner for player {}!'.format(player_active))
         return True
     elif 'XXX' in ''.join(ltc[4:7]):
@@ -82,6 +83,9 @@ def win_check(ltc):
         return True
     elif 'XXX' in ''.join(ltc[3:8:2]):
         print('player{}, you got that right'.format(player_active))
+        return True
+    if 'OOO' in ''.join(ltc[1:4]):
+        print('Winner winner chicken dinner for player {}!'.format(player_active))
         return True
     else:
         return False
