@@ -14,7 +14,7 @@ def display_board(x):
         print('                                             |     |     ')
     print(' ')
 
-
+# merge below functuions ito singe function with a tuple output
 def player_one_input():
     '''Takes the input from the player, asking if they want to play as X or O'''
 
