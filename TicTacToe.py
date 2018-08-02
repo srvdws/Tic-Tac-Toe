@@ -2,7 +2,6 @@
 
 from random import randint
 
-WHAAAT
 
 def display_board(x):
     '''Prints the board, including the input from a LIST(x) into the required squares'''
