@@ -14,22 +14,21 @@ def display_board(x):
         print(' '*30,'     |     |     ')
     print(' ')
 
-# merge below functuions ito singe function with a tuple output
-def player_one_input():
+
+def player_input():
+    p1 = None
     '''Takes the input from the player, asking if they want to play as X or O'''
+    while p1 != 'X' and p1 != 'O':
+        p1 = (str(input('Player one, please pick if you want to be X or O\n'))).upper()
 
-    i = None
-    while i != 'X' and i != 'O':
-        i = (str(input('Player one, please pick if you want to be X or O\n'))).upper()
-    return i
-
-
-def player_two_calc(p1):
     if p1 == 'X':
         p2 = 'O'
-    elif p1 == 'O':
+    else:
         p2 = 'X'
-    return p2
+
+    return p1, p2
+
+
 
 
 def converted_player_choice(x):
@@ -155,8 +154,7 @@ while game_running == True:
 
     display_board(blank_board)
 
-    player_one_marker = player_one_input()
-    player_two_marker = player_two_calc(player_one_marker)
+    player_one_marker, player_two_marker = player_input()
 
     clear_screen()
     print("\nYou're choice is {}\nPlayer two is {}".format(player_one_marker, player_two_marker))
