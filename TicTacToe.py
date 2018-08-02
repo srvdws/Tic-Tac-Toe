@@ -8,10 +8,10 @@ def display_board(x):
     print(' ')
     for i in range(1, 8, 3):
         if i != 1:
-            print('                                        -----+-----+-----')
-        print('                                             |     |     ')
-        print('                                          {}  |  {}  |  {}  '.format(x[i], x[i + 1], x[i + 2]))
-        print('                                             |     |     ')
+            print(' '*30,'-----+-----+-----')
+        print(' '*30,'     |     |     ')
+        print(' '*30,'  {}  |  {}  |  {}  '.format(x[i], x[i + 1], x[i + 2]))
+        print(' '*30,'     |     |     ')
     print(' ')
 
 # merge below functuions ito singe function with a tuple output
