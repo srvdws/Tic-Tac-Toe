@@ -36,71 +36,49 @@ def converted_player_choice(x):
     return int(x)
 
 
-def place_marker():
+def p1_place_marker(x):
     global list_to_board
     global player_active
-    global player_not_active
 
-    while win_check(list_to_board) == False:
-        if full_board_check() == False:
+    player_active = x
 
-            if player_active == 1:
-                marker = player_one_marker
-            elif player_active == 2:
-                marker = player_two_marker
+    player_choice = int(input('\nPlayer 1, place your {}\n'.format(player_one_marker)))
+    if is_space_empty(player_choice):
 
-            player_choice = int(input('\nPlayer {}, place your {}\n'.format(player_active, marker)))
-            if is_space_empty(player_choice):
+        if player_choice in range(1,10):
 
-                if player_choice in range(1,10):
-
-                    list_to_board[converted_player_choice(player_choice)] = marker
-                    clear_screen()
-                    display_board(list_to_board)
-                else:
-                    print('That is not a valid choice')
-
-                if player_active == 1:
-                    player_active = 2
-                    player_not_active =1
-                elif player_active == 2:
-                    player_active = 1
-                    player_not_active = 2
-                else:
-                    break
-            else:
-                clear_screen()
-                display_board(list_to_board)
-                print('that space is already taken')
+            list_to_board[converted_player_choice(player_choice)] = player_one_marker
+            clear_screen()
+            display_board(list_to_board)
         else:
-            break
+            print('That is not a valid choice')
 
 
 def win_check(ltc):
 
     if 'XXX' == ''.join(ltc[1:4]) or 'OOO' == ''.join(ltc[1:4]):
-        print('Winner winner chicken dinner for player {}!'.format(player_not_active))
+        print('Winner winner chicken dinner for player {}!'.format(player_active))
         return True
     elif 'XXX' == ''.join(ltc[4:7]) or 'OOO' == ''.join(ltc[4:7]):
-        print('A winrar is you, player {}'.format(player_not_active))
+        print('A winrar is you, player {}'.format(player_active))
         return True
     elif 'XXX' == ''.join(ltc[7:]) or 'OOO' == ''.join(ltc[7:]):
-        print('player {}, you won'.format(player_not_active))
+        print('player {}, you won'.format(player_active))
         return True
     elif 'XXX' == ''.join(ltc[1::3]) or 'OOO' == ''.join(ltc[1::3]):
-        print('player {}, you beast'.format(player_not_active))
+        print('player {}, you beast'.format(player_active))
         return True
     elif 'XXX' == ''.join(ltc[2::3]) or 'OOO' == ''.join(ltc[2::3]):
-        print('player {}, you got that right'.format(player_not_active))
+        print('player {}, you got that right'.format(player_active))
         return True
     elif 'XXX' == ''.join(ltc[3::3]) or 'OOO' == ''.join(ltc[3::3]):
-        print('player {}, is the winner!'.format(player_not_active))
+        print('player {}, is the winner!'.format(player_active))
         return True
     elif 'XXX' == ''.join(ltc[1::4]) or 'OOO' == ''.join(ltc[1::4]):
-        print('player {}, you got three in a row!'.format(player_not_active))
+        print('player {}, you got three in a row!'.format(player_active))
         return True
     elif 'XXX' == ''.join(ltc[3:8:2]) or 'OOO' == ''.join(ltc[3:8:2]):
-        print('player {}, on the angle!'.format(player_not_active))
+        print('player {}, on the angle!'.format(player_active))
         return True
     else:
         return False
@@ -136,12 +114,13 @@ def replay():
         print('Thanks for playing')
         return False
 
+
 def clear_screen():
-    print('\n '*100)
+    print('\n '*5)
+
 
 game_running = True
 
-# print(win_check(test_board))
 while game_running == True:
     blank_board = ['#', 'T', 'I', 'C', 'T', 'A', 'C', 'T', 'O', 'E']
     list_to_board = [' '] * 10
@@ -162,6 +141,29 @@ while game_running == True:
 
     display_board(numbered_board)
 
-    place_marker()
+    while win_check(list_to_board) == False:
+        if full_board_check() == False:
 
-    game_running = replay()
+            p1_place_marker()
+
+        else:
+            clear_screen()
+            display_board(list_to_board)
+            print('that space is already taken')
+            break
+
+
+        if full_board_check() == False:
+
+            p2_place_marker()
+
+        else:
+            clear_screen()
+            display_board(list_to_board)
+            print('that space is already taken')
+            break
+    else:
+        break
+
+
+game_running = replay()
